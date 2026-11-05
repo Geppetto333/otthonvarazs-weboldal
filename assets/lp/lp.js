@@ -1,8 +1,8 @@
 /* Otthonvarázs landing – közös szkript. FIGYELEM: itt kell megadni a GTM ID-t és a webhook URL-t (egyszer, minden oldalra érvényes). */
 (function(){
   var GTM_ID = "GTM-KPHBRZJ6";               // <-- ide jön az Otthonvarázs GTM konténer ID
-  var WEBHOOK_URL = "IDE_JON_A_WEBHOOK_URL"; // <-- ide jön a GHL / űrlap webhook URL
-  var LP = window.LP || {};
+  var WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/EcvwZiDMYa7g79S5U8Xb/webhook-trigger/ytt3003CZSANVsEAZpLB"; // GHL webhook
+    var LP = window.LP || {};
   window.dataLayer = window.dataLayer || [];
 
   // Google Tag Manager betöltése
