@@ -41,6 +41,15 @@
 
   document.querySelectorAll("form.lead").forEach(function(form){
     var started=false;
+    if(!form.email){
+      var pf = form.phone && form.phone.closest(".field");
+      if(pf){
+        var eid = (form.phone.id||"x").replace(/^p_/,"e_");
+        var ed = document.createElement("div"); ed.className="field";
+        ed.innerHTML = '<label for="'+eid+'">E-mail cím</label><input id="'+eid+'" name="email" type="email" inputmode="email" autocomplete="email" placeholder="Pl. kovacs.anna@gmail.com">';
+        pf.parentNode.insertBefore(ed, pf.nextSibling);
+      }
+    }
     form.addEventListener("focusin", function(){ if(!started){ started=true; window.dataLayer.push({event:"form_start", page_slug:LP.page}); } });
     form.addEventListener("submit", function(ev){
       ev.preventDefault();
@@ -48,14 +57,16 @@
       msg.className="msg"; msg.textContent="";
       function err(t){ msg.className="msg err"; msg.textContent=t; return false; }
       var name = form.name.value.trim(), phone = form.phone.value.trim(), city = form.city.value.trim();
+      var email = (form.email ? form.email.value.trim() : "");
       if(name.length<2){ return err("Kérjük, adja meg a nevét."); }
       if(!validPhone(phone)){ return err("Kérjük, adjon meg érvényes telefonszámot (pl. 06 70 123 4567)."); }
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ return err("Kérjük, adjon meg érvényes e-mail címet."); }
       if(city.length<2){ return err("Kérjük, adja meg a települést vagy a budapesti kerületet."); }
       if(!form.consent.checked){ return err("Az ajánlatkéréshez el kell fogadnia az adatkezelési tájékoztatót."); }
       if(/IDE_/.test(WEBHOOK_URL)){ return err("Beállítási hiba: a webhook URL még nincs megadva (assets/lp/lp.js)."); }
 
       var payload = {
-        name:name, phone:normPhone(phone), city:city,
+        name:name, phone:normPhone(phone), email:email, city:city,
         detail:(form.detail? form.detail.value.trim():""),
         service:LP.service, page:LP.page, url:location.href,
         submitted_at:new Date().toISOString()
