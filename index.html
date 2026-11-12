@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
- <!-- Google Tag Manager -->
+ <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});try{var _c=JSON.parse(localStorage.getItem('ov_consent_v1'));if(_c)gtag('consent','update',{analytics_storage:_c.stat?'granted':'denied',ad_storage:_c.mkt?'granted':'denied',ad_user_data:_c.mkt?'granted':'denied',ad_personalization:_c.mkt?'granted':'denied'})}catch(e){}</script>
+<!-- Google Tag Manager -->
  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-KPHBRZJ6"></script>
  <script>
   window.dataLayer = window.dataLayer || [];
@@ -60,7 +61,7 @@
 </style>
 <script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
-gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500});
+
 </script>
 <template id="__bundler_thumbnail" data-bg-color="#0c0b0a">
 <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg"><rect width="1200" height="800" fill="#0c0b0a"/><path d="M420 430 L600 290 L780 430 L780 560 L420 560 Z" fill="none" stroke="#c9a227" stroke-width="16"/><rect x="560" y="470" width="80" height="90" fill="#c9a227"/></svg>
@@ -558,7 +559,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:20px;font-size:13px;color:var(--mute)
         var btn=form.querySelector('[type=submit]'), lbl=btn.textContent; btn.disabled=true; btn.textContent='Küldés…';
         var p={access_key:WEB3FORMS_KEY,subject:'Új ajánlatkérés – '+d.nev+' ('+d.forras+')',from_name:'Otthon Varázs weboldal',replyto:d.email,'Név':d.nev,'Telefon':d.telefon,'E-mail':d.email,'Ingatlan típusa':d.ingatlan,'Mikorra tervezi':d.mikor,'Üzenet':d.uzenet||'-','Kalkuláció':d.kalkulacio,'Forrás':d.forras};
         fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(p)})
-          .then(function(r){return r.json()}).then(function(j){ if(j.success) done(); else throw 0; })
+          .then(function(r){return r.json()}).then(function(j){ if(j.success){ done(); try{sessionStorage.setItem('ov_lead','1')}catch(e){} location.href='/koszonjuk/'+(location.search||''); } else throw 0; })
           .catch(function(){ btn.disabled=false; btn.textContent=lbl; mail(); });
       } else mail();
     });
